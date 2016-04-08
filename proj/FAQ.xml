@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<?xml-stylesheet type='text/xsl' href='style-FAQ.xsl' ?>
+
+
+<FAQ>
+	<parent>
+	<questions>
+		<ques>1 Why cant I log in? </ques>
+	</questions>
+
+	<questions>
+		<ques>2 Why was I banned? </ques>
+	</questions>
+
+	<questions>
+		<ques>3 I am lost help! </ques>
+	</questions>
+
+	<questions>
+		<ques>4 I have forgotten my password or username or both. Where do I go? </ques>
+	</questions>
+
+	<questions>
+		<ques>5 How do I change email or password? </ques>
+	</questions>
+
+	<questions>
+		<ques>6 How do I change username? </ques>
+	</questions>
+
+	<questions>
+		<ques>7 How do I delete a post? </ques>
+	</questions>
+
+	<questions>	
+		<ques>8 How do I become an admin? </ques>
+	</questions>
+
+	<questions>	
+		<ques>9 What is the purpose of this forum? </ques>
+	</questions>
+
+	<questions>	
+		<ques>10 Who developed this forum? </ques>
+	</questions>
+
+	<questions>	
+		<ques>11 What technology stack was used to make this forum? </ques>
+	</questions>
+	
+<!--Space-->
+
+	<answers>
+		<ques>1 Why cant I log in? </ques>
+		<ans> If you have an account the username and password must match exactly. If you are not yet a registered user you may sign up for an account. The username and password that you use to make your account will be used to sign in.  </ans>
+	</answers>
+		
+	<answers>
+		<ques>2 Why was I banned? </ques>
+		<ans> You may have done things against our terms of service or you may have been disruptive on the forums. Please contact an admin for more information. This may be done on the contact form on our contact page. </ans>
+	</answers>
+	
+	<answers>
+		<ques>3 I am lost help! </ques>
+		<ans> You have reached the JNAC forums. You can click on the home button to get back to the home page.  </ans>
+	</answers>
+	
+	<answers>	
+		<ques>4 I have forgotten my password or username or both. Where do I go? </ques>
+		<ans> You may either register a new username or use the contact form on our contact page in order to get in touch with an administrator. </ans>
+	</answers>
+	
+	<answers>
+		<ques>5 How do I change email or password? </ques>
+		<ans> You must be a registered user and logged in. Click on my profile. From here you may change your email or password. </ans>
+	</answers>
+	
+	<answers>
+		<ques>6 How do I change username? </ques>
+		<ans> Currently not available. You may request an administrator to change your username manually. </ans>
+	</answers>
+	
+	<answers>
+		<ques>7 How do I delete a post? </ques>
+		<ans> Currently not available. You may request an administrator to delete your post manually. </ans>
+	</answers>
+	
+	<answers>
+		<ques>8 How do I become an admin? </ques>
+		<ans> Be a respectful active user and follow the terms of service and maybe we'll let you be an admin :). </ans>
+	</answers>
+	
+	<answers>	
+		<ques>9 What is the purpose of this forum? </ques>
+		<ans> To facilitate discussion via the internet. </ans>
+	</answers>
+	
+	<answers>
+		<ques>10 Who developed this forum? </ques>
+		<ans> James, Nick, Andrew and Carson. Click on the contact page for more information about each of us. </ans>
+	</answers>
+	
+		
+	<answers>
+		<ques>11 What technology stack was used to make this forum? </ques>	
+		<ans> The forum was built using php, css, html, sql, javascript, ajax, xml and xsl. </ans>
+	</answers>
+	
+	</parent>
+</FAQ>
