@@ -10,6 +10,82 @@ require_once('../../private_html/config.php');
 
 */
 
+//generates a random string of 10 characters
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}   
+
+//function will give the user with corresponding email a random password, then call another function to email that password
+function sqlSetRandomPassword($email,$pass) {
+    global $servername, $dbname, $password, $username;
+
+    try {
+        $db = new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
+        $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        $newpass=password_hash($pass,PASSWORD_DEFAULT);
+        $sql="UPDATE users SET users.userpw='$newpass' WHERE users.useremail='$email';";
+
+        $db->exec($sql);
+        $db = null;
+    }
+    catch(PDOException $e) {
+        die ("FATAL ERROR");
+    }
+}
+
+function emailPassword($email,$pass){
+    $msg = "Your new password for the Forum is $pass";
+    mail("$email","Password Recovery",$msg);
+}
+
+//takes email as input, and checks if it is in DB, 1 for true, 0 for false
+function checkEmail($email){
+    global $servername, $dbname, $password, $username;
+    try {
+        $db = new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
+        $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        $stmt = $db->prepare("SELECT * FROM users WHERE useremail = :email");
+        $stmt->bindValue(":email",trim($email));
+        $stmt->execute();
+        //0 if no results, 1 if exists
+        if ($stmt->rowCount() == 0) {
+            $db = null;
+            return 0;
+        } else if ($stmt->rowCount() >= 1) {
+            $db = null;
+            return 1;
+        }
+    }
+    catch(PDOException $e) {
+        die ("FATAL ERROR!");
+    }
+}
+
+
+
+/*
+    Function will check to see if a user is banned. If the user is banned, the user is redirected to a banned page and logged out
+ */
+function checkBan(){
+    if (isset($_SESSION['auth'])){
+        if ($_SESSION['auth_info']['userPriv']=='banned'){
+            //echo '<center><img src="img/goonbegone.jpg" alt="Goon be gone!" style="width:800px;height:500px"></center><br>';
+echo <<<BANNED
+     <div class="well well-lg">
+        <h1 class="center">GOON BE GONE</h1>
+        <img src="img/goonbegone.jpg" class="centerimg" alt="Goon be gone!" style="width:800px;height:500px">
+     </div>
+BANNED;
+            die(); 
+        }
+    }
+}
 
 /*
 	Description:	The purpose of this function is to connect to the database using PDO method and run a query statement, returning the results.
@@ -440,13 +516,16 @@ echo<<<LOGONAV
                 <div class="col-xs-6">
                     <ul class="nav navbar-nav">
                       <li><a href="index.php"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
-                      
-                    </ul>
+LOGONAV;
+if (!isset($_SESSION['auth'])){
+echo<<<LOGONAV
+                    <li><a href="forgot.php"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Forgot Password</a></li>
+LOGONAV;
+}
+echo<<<LOGONAV
+                </ul>
                 </div>
-            
-
                 <div class="col-xs-6">
-
 LOGONAV;
 
 /*
@@ -532,6 +611,8 @@ echo<<<LOGONAV
        </div>
       </nav>
 LOGONAV;
+
+//checkBan(); 
 }
 
 /*

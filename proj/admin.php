@@ -166,7 +166,62 @@ PRINTTBL;
                         </tfoot>
                     </table>
                 </div>
+            </div>
+
+  <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h3>Ban User</h3>
+                    <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="banUser" name="banUser">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td class="text-right"><h5>Select</h5></td>
+                                <td><h5>User</h5></td>
+                            </tr>
+                        </thead>
+                        <tbody>                                                
+                        <?php 
+                            //Retrieve all user from the database
+                            $listOfUsers = sqlQPDO("SELECT * FROM users;");
+                            
+                            //List all users
+                            foreach ($listOfUsers as $user) {
+echo <<<PRINTTBL
+                        <tr>
+                            <td class="col-sm-1">
+                                <div class="checkbox pull-right">
+                                  <label>
+                                    <input type="checkbox" name="userArr[]" value="{$user['userID']}" aria-label="...">
+                                  </label>
+                                </div>                                
+                            </td>
+                            <td class="col-sm-11">
+                                <h5>{$user['username']}</h5>
+                            </td>
+                        </tr>
+PRINTTBL;
+                            };
+                            
+                        ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                  <div class="form-group">
+                                    <div class="col-sm-offset-1 col-sm-10">
+                                      <button id="banUser" name="banUser" type="submit" class="btn btn-danger">Ban</button>
+                                    </div>
+                                  </div>
+                                </form>                
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>              
+        </div>
+
+
         </div>
         
 <?php generateFooter(); ?>        

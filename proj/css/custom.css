@@ -140,3 +140,9 @@ iframe {
 .padme {
     margin-top: 20px;
 }
+
+.centerimg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
