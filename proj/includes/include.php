@@ -21,17 +21,17 @@ function generateRandomString($length = 10) {
     return $randomString;
 }   
 
-//function will give the user with corresponding email a random password, then call another function to email that password
+//function takes the users email and the randomly generated password and changes the pw in the db to the random pw
 function sqlSetRandomPassword($email,$pass) {
     global $servername, $dbname, $password, $username;
 
     try {
         $db = new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
         $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        $newpass=password_hash($pass,PASSWORD_DEFAULT);
-        $sql="UPDATE users SET users.userpw='$newpass' WHERE users.useremail='$email';";
-
-        $db->exec($sql);
+        
+        $statement = $db->prepare("UPDATE users SET users.userpw=SHA2(:userpw,256) WHERE users.useremail=\"$email\";");
+        $statement->bindValue(':userpw',trim($pass));
+        $statement->execute();
         $db = null;
     }
     catch(PDOException $e) {
@@ -40,8 +40,11 @@ function sqlSetRandomPassword($email,$pass) {
 }
 
 function emailPassword($email,$pass){
-    $msg = "Your new password for the Forum is $pass";
-    mail("$email","Password Recovery",$msg);
+    $adminemail="jnac-no-reply@gmail.com";
+    $from="From: Forum Password<$adminemail>\r\nReturn-path: $adminemail";
+    $subject="Password Recovery";
+    $message="Your new password for the Forum is $pass";
+    mail("$email", $subject, $message, $from); 
 }
 
 //takes email as input, and checks if it is in DB, 1 for true, 0 for false
@@ -612,7 +615,7 @@ echo<<<LOGONAV
       </nav>
 LOGONAV;
 
-//checkBan(); 
+checkBan(); 
 }
 
 /*
